@@ -44,36 +44,72 @@ class TicTacToe {
 		for (let i = 0; i < 4; i++) {
 			// Nav cols
 			for (let j = 0; j < 4; j++) {
-				if (board[i][j] == 'X') {
-					if (rowWinsX[i] === true ) {
-						// then the row is winning
-					} else {
-						rowWinsX[j] = false;
-					}
+			    switch (board[i][j]) {
+			        case 'X':
+			    		rowWinsO[i] = false;
+			            columnWinsO[j] = false;
+			            break;
+			        case 'O':
+			            rowWinsX[i] = false;
+			            columnWinsX[j] = false;
+			            break;
+			        default:
+			            rowWinsX[i] = false;
+			            rowWinsO[i] = false;
+			            columnWinsX[j] = false;
+			            columnWinsO[j] = false;
+			    }
+			    
+			    
+				// if (board[i][j] == 'X') {
+				//     console.log(board[i][j])
+				// 	if (rowWinsX[i] === true ) {
+				// 		// then the row is winning
+				// 	} else {
+				// 		rowWinsX[j] = false;
+				// 	}
 
-					if (columnWinsX[j] === true) {
-						// then the column is winning
-					} else {
-						columnWinsX[j] = false;
-					}
-				} else if (board[i][j] == 'O') {
-					if (rowWinsO[i] === true ) {
-						// then the row is winning
-					} else {
-						rowWinsO[j] = false;
-					}
+				// 	if (columnWinsX[j] === true) {
+				// 		// then the column is winning
+				// 	} else {
+				// 		columnWinsX[j] = false;
+				// 	}
+				// } else if (board[i][j] == 'O') {
+				// 	if (rowWinsO[i] === true ) {
+				// 		// then the row is winning
+				// 	} else {
+				// 		rowWinsO[j] = false;
+				// 	}
 
-					if (columnWinsO[j] === true) {
-						// then the column is winning
-					} else {
-						columnWinsO[j] = false;
-					}
-				}
+				// 	if (columnWinsO[j] === true) {
+				// 		// then the column is winning
+				// 	} else {
+				// 		columnWinsO[j] = false;
+				// 	}
+				// } else {
+				//     rowWinsO[j] = false;
+				    
+				// }
 			}
 		}
 
-	}
+// 		console.log(columnWinsX)
+// 		console.log(rowWinsX)
 
+
+
+// 		console.log(columnWinsO)
+// 		console.log(rowWinsO)
+
+        if (columnWinsO.includes(true) || rowWinsO.includes(true)) {
+            return 'O';
+    
+    	} else if (columnWinsX.includes(true) || rowWinsX.includes(true)) {
+    	    return 'X';
+    	}
+    	
+    	return null;
+	}
 	// Returns bool TRUE if there are moves left or bool FALSE if there are no moves left to make.
 	static anyMovesLeft(board) {
 		for (let i = 0; i < 4; i++) {
@@ -114,5 +150,3 @@ class TicTacToe {
 		return false
 	}
 }
-
-
