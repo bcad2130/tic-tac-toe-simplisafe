@@ -108,8 +108,23 @@ class TicTacToe {
     	}
 
 		// 2x2 Box
+		for (let i = 0; i < 3; i++) {
+			for (let j = 0; j < 3; j++) {
+				if (board[i][j] === 'X' && 
+					board[i+1][j] === 'X' &&
+					board[i][j+1] === 'X' &&
+					board[i+1][j+1] === 'X') {
+					return 'X';
+				}
 
-
+				if (board[i][j] === 'O' && 
+					board[i+1][j] === 'O' &&
+					board[i][j+1] === 'O' &&
+					board[i+1][j+1] === 'O') {
+					return 'O';
+				}
+			}
+		}
 
     	// No winner, return null
     	return null;
