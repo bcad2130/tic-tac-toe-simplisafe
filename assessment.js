@@ -10,19 +10,50 @@ class TicTacToe {
 	// Check all win conditions for current board.
 	// Return 'X' if the X Player has won, Return 'O' if the O Player has won, or return NULL if neither player has won.
 	static checkWinner(board) {
-		// Vertical
-		let columnWinsX = [true, true, true, true];
-		let columnWinsO = [true, true, true, true];
 
-		// Horizontal
-		let rowWinsX = [true, true, true, true];
-		let rowWinsO = [true, true, true, true];
+		// Diagonal Win
+		let diagonalLeftRightWinsX = true;
+		let diagonalRightLeftWinsX = true;
 
-		// Diagonal
-		let diagonalWinsX = [true, true];
-		let diagonalWinsO = [true, true];
+		let diagonalLeftRightWinsO = true;
+		let diagonalRightLeftWinsO = true;
 
-		// Four Corners
+
+		for (let i = 0; i < 4; i++) {
+			switch (board[i][i]) {
+				case 'X':
+					diagonalLeftRightWinsO = false;
+					break;
+				case 'O':
+					diagonalLeftRightWinsX = false;
+					break;
+				default:
+					diagonalLeftRightWinsO = false;
+					diagonalLeftRightWinsX = false;
+			}
+
+			switch (board[i][3-i]) {
+				case 'X':
+					diagonalRightLeftWinsO = false;
+					break;
+				case 'O':
+					diagonalRightLeftWinsX = false;
+					break;
+				default:
+					diagonalRightLeftWinsO = false;
+					diagonalRightLeftWinsX = false;
+			}
+		}
+
+		if (diagonalLeftRightWinsX || diagonalRightLeftWinsX) {
+			return 'X';
+		}
+
+		if (diagonalLeftRightWinsO || diagonalRightLeftWinsO) {
+			return 'O';
+		}
+
+		// Four Corners Win
 		if (board[0][0] === 'X' && 
 			board[0][3] === 'X' &&
 			board[3][0] === 'X' &&
@@ -37,69 +68,37 @@ class TicTacToe {
 			return 'O';
 		}
 
-		// 2x2 Box
+		// Vertical Win
+		let columnWinsX = [true, true, true, true];
+		let columnWinsO = [true, true, true, true];
 
+		// Horizontal Win
+		let rowWinsX = [true, true, true, true];
+		let rowWinsO = [true, true, true, true];
 
-		// Nav rows
 		for (let i = 0; i < 4; i++) {
-			// Nav cols
 			for (let j = 0; j < 4; j++) {
+
 			    switch (board[i][j]) {
+
 			        case 'X':
 			    		rowWinsO[i] = false;
 			            columnWinsO[j] = false;
 			            break;
+
 			        case 'O':
 			            rowWinsX[i] = false;
 			            columnWinsX[j] = false;
 			            break;
+
 			        default:
 			            rowWinsX[i] = false;
 			            rowWinsO[i] = false;
 			            columnWinsX[j] = false;
 			            columnWinsO[j] = false;
 			    }
-			    
-			    
-				// if (board[i][j] == 'X') {
-				//     console.log(board[i][j])
-				// 	if (rowWinsX[i] === true ) {
-				// 		// then the row is winning
-				// 	} else {
-				// 		rowWinsX[j] = false;
-				// 	}
-
-				// 	if (columnWinsX[j] === true) {
-				// 		// then the column is winning
-				// 	} else {
-				// 		columnWinsX[j] = false;
-				// 	}
-				// } else if (board[i][j] == 'O') {
-				// 	if (rowWinsO[i] === true ) {
-				// 		// then the row is winning
-				// 	} else {
-				// 		rowWinsO[j] = false;
-				// 	}
-
-				// 	if (columnWinsO[j] === true) {
-				// 		// then the column is winning
-				// 	} else {
-				// 		columnWinsO[j] = false;
-				// 	}
-				// } else {
-				//     rowWinsO[j] = false;
-				    
-				// }
 			}
 		}
-
-// 		console.log(columnWinsX)
-// 		console.log(rowWinsX)
-
-
-
-// 		console.log(columnWinsO)
-// 		console.log(rowWinsO)
 
         if (columnWinsO.includes(true) || rowWinsO.includes(true)) {
             return 'O';
@@ -107,9 +106,15 @@ class TicTacToe {
     	} else if (columnWinsX.includes(true) || rowWinsX.includes(true)) {
     	    return 'X';
     	}
-    	
+
+		// 2x2 Box
+
+
+
+    	// No winner, return null
     	return null;
 	}
+
 	// Returns bool TRUE if there are moves left or bool FALSE if there are no moves left to make.
 	static anyMovesLeft(board) {
 		for (let i = 0; i < 4; i++) {
@@ -127,6 +132,9 @@ class TicTacToe {
 	// Check if there is a winner on the board. If not, check if there are any moves left to make. If either are true, the
 	static isGameOver(board) {
 		// let winner = checkWinner(board);
+		// if (winner === 'X' || winner === 'O') {
+		// 	return true;
+		// }
 
 		// TODO check if this is the correct way to pass a method to a switch statement
 		switch (winner = checkWinner(board)) {
@@ -139,8 +147,6 @@ class TicTacToe {
 			default:
 				// No winner (yet)
 		}
-
-
 
 		if (!anyMovesLeft(board)) {
 			return true;
